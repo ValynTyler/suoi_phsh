@@ -36,11 +36,14 @@ impl Plane {
 impl CollisionShape for Plane {
     fn raycast(&self, ray: &Ray) -> Raycast {
         let dir_dot_abc = ray.dir().dot(self.normal());
-        // this will not handle cases where dir and normal point in the same direction
-        match -dir_dot_abc > SIGNIFICANT_DIST_THRESH {
+        match dir_dot_abc.abs() > SIGNIFICANT_DIST_THRESH {
             true => {
                 let t = (-(ray.pos().dot(self.normal()) + self.d)) / dir_dot_abc;
                 let p = ray.pos() + ray.dir().unit() * t;
+
+                if t < 0.0 {
+                    return Raycast::Miss    
+                }
 
                 Raycast::Hit(HitInfo {
                     distance: t,

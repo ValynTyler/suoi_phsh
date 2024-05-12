@@ -7,6 +7,15 @@ pub enum Raycast {
     Hit(HitInfo),
 }
 
+impl Raycast {
+    pub fn is_hit(&self) -> bool {
+        match self {
+            Raycast::Miss => false,
+            Raycast::Hit(_) => true,
+        }
+    }
+}
+
 #[derive(Debug)]
 pub struct HitInfo {
     pub distance: f32,

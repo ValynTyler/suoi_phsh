@@ -5,7 +5,7 @@ use crate::{
     ray::{HitInfo, Ray, Raycast},
 };
 
-const SIGNIFICANT_DIST_THRESH: f32 = 0.0001;
+const SIGNIFICANT_DIST_THRESH: f32 = 0.0000001;
 
 pub struct Plane {
     a: f32,
@@ -35,11 +35,14 @@ impl Plane {
 
 impl CollisionShape for Plane {
     fn raycast(&self, ray: &Ray) -> Raycast {
-        let dir_dot_abc = ray.dir().dot(self.normal());
+        let dir = ray.dir().unit();
+        let abc = self.normal().unit();
+        let dir_dot_abc = dir.dot(abc);
+
         match dir_dot_abc.abs() > SIGNIFICANT_DIST_THRESH {
             true => {
-                let t = (-(ray.pos().dot(self.normal()) + self.d)) / dir_dot_abc;
-                let p = ray.pos() + ray.dir().unit() * t;
+                let t = (-(ray.pos().dot(abc) + self.d)) / dir_dot_abc;
+                let p = ray.pos() + dir * t;
 
                 if t < 0.0 {
                     return Raycast::Miss    

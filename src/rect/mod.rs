@@ -10,9 +10,9 @@ impl Rect {
     pub fn inside(&self, point: Vector2) -> bool {
         let position = self.position;
         let size = self.size;
-        point.x < position.x + size.x &&
-        point.x > position.x - size.x &&
-        point.y < position.y + size.y &&
-        point.y > position.y - size.y
+        point.x < (position.x + size.x) &&
+        point.x > (position.x - size.x) &&
+        point.y < (position.y + size.y) &&
+        point.y > (position.y - size.y)
     }
 }

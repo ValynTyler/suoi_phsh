@@ -7,18 +7,18 @@ use crate::{
     rect::Rect,
 };
 
-pub struct Box {
+pub struct BoundingBox {
     pub position: Vector3,
     pub size: Vector3,
 }
 
-impl Box {
+impl BoundingBox {
     pub fn mat(&self) -> Matrix4 {
         &Matrix4::translate(self.position) * &Matrix4::scale(self.size)
     }
 }
 
-impl CollisionShape for Box {
+impl CollisionShape for BoundingBox {
     fn raycast(&self, ray: &Ray) -> Raycast {
         let dir = ray.dir().unit();
 

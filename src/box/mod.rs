@@ -1,4 +1,4 @@
-use suoi_types::{Vector, Vector3};
+use suoi_types::{Matrix4, Vector, Vector3};
 
 use crate::{
     collision_shape::CollisionShape,
@@ -10,6 +10,12 @@ use crate::{
 pub struct Box {
     pub position: Vector3,
     pub size: Vector3,
+}
+
+impl Box {
+    pub fn mat(&self) -> Matrix4 {
+        &Matrix4::translate(self.position) * &Matrix4::scale(self.size)
+    }
 }
 
 impl CollisionShape for Box {

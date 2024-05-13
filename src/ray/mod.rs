@@ -1,3 +1,5 @@
+use std::fmt::Display;
+
 use suoi_types::Vector3;
 
 use crate::collision_shape::CollisionShape;
@@ -6,6 +8,17 @@ use crate::collision_shape::CollisionShape;
 pub enum Raycast {
     Miss,
     Hit(HitInfo),
+}
+
+impl Display for Raycast {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        if let Raycast::Hit(info) = self {
+            // write!(f, "[distance: {:.2}, point: {:.2}, inside?: {}]", info.distance, info.point, info.inside)
+            write!(f, "[distance: {:.2}, point: {:.2}]", info.distance, info.point)
+        } else {
+            write!(f, "{:?}", self)
+        }
+    }
 }
 
 impl Raycast {

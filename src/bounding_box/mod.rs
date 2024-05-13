@@ -73,14 +73,15 @@ impl CollisionShape for BoundingBox {
         };
 
         // z axis
+        // make sure to have correct sign for coordinate system
         let plane = match dir.z > 0.0 {
             true => Plane::point_normal(
-                self.position - Vector3::fwd() * self.size.z,
-                -Vector3::fwd(),
-            ),
-            false => Plane::point_normal(
                 self.position + Vector3::fwd() * self.size.z,
                 Vector3::fwd(),
+            ),
+            false => Plane::point_normal(
+                self.position - Vector3::fwd() * self.size.z,
+                -Vector3::fwd(),
             ),
         };
 
